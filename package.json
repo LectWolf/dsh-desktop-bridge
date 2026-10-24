@@ -32,7 +32,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "dsh": ">=0.2.1"
+    "dsh": ">=0.2.1-rc.2"
   },
   "dsh": {
     "client": {
