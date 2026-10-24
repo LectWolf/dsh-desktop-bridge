@@ -1,0 +1,39 @@
+{
+  "name": "dsh-desktop-bridge",
+  "version": "0.0.1",
+  "description": "Reverse-tunnel bridge that exposes the owner desktop machine to a remote DeepSeek Harness agent, with explicit per-call approval and a management panel.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "docs",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "plugin",
+    "remote",
+    "desktop"
+  ],
+  "license": "MIT",
+  "engines": {
+    "dsh": ">=0.2.1"
+  },
+  "dsh": {
+    "client": {
+      "platform": "web",
+      "inject": []
+    }
+  }
+}
