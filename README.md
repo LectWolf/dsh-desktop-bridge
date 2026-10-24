@@ -61,9 +61,12 @@ host 侧另有一份 `roots` / `allow` 作为额外上限，两边都放行才�
 
 ## 配置
 
-两边都声明了 `Config` schema，并由同一个客户端半边（`lib/client.js`）在「设置 → 插件」里各注册一张卡：
-服务端那张管监听地址/端口/数据目录/审批超时，桌面端那张管服务器地址、令牌、设备 id、权限档位、超时与重连。
-`roots` / `allow` / `builds` 这类表结构仍在配置文件里改，卡片里给了提示。
+一个包两半：host 半边是 Node（起端口、注册工具），client 半边是浏览器 bundle（画设置卡）。
+装了 bundle 之后，卡片在 **Plugins → Built-in plugin settings → Desktop bridge**：
+服务器地址、令牌、设备 id、权限档位、重连间隔、监听地址/端口/数据目录、审批超时都在这里改。
+`roots` / `allow` / `builds` 这类数组与表仍在 profile 的用户层配置里改，卡片里给了提示。
+
+配置里填了 `url` + `token` 就跑 agent 半边，否则跑 host 半边——同一个包，服务器和桌面通用。
 
 host 侧（`cordis.patch.yml`）：
 

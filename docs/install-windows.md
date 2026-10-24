@@ -2,6 +2,7 @@
 
 目标：让这台 Windows 上的 DSH Desktop 主动连上服务器，把本机工具暴露给服务器上的 Agent，且每次调用都要你确认。
 
+
 ## 1. 装插件
 
 在 Desktop 的控制台里（或者任意能跑 `dsh` 的终端）：
@@ -10,40 +11,36 @@
 dsh plugin --profile desktop add github:LectWolf/dsh-desktop-bridge
 ```
 
-装完后 `%USERPROFILE%\.dsh\profiles\desktop\package.json` 的依赖里会多这一条，`dsh.profile.bundles` 里也会出现 `dsh-desktop-bridge`。
+装完后 `%USERPROFILE%\.dsh\profiles\desktop\package.json` 的依赖里会多这一条，`dsh.profile.bundles` 里也会出现 `dsh-desktop-bridge`，插件会作为一层 bundle 自动挂上。同一个包在服务器和桌面通用，配了 `url` + `token` 就走 agent 半边。
 
-## 2. 填配置
+## 2. 填配置（设置卡里改）
 
-编辑 `%USERPROFILE%\.dsh\profiles\desktop\cordis.patch.yml`，追加：
+左侧竖栏 **Plugins → Built-in plugin settings → Desktop bridge**，表单里填：
+
+- **Server URL**：`wss://dsh.mcii.cc/desktop-bridge/agent`
+- **Device token**：服务器生成的设备令牌
+- **Device id**：`owner-win`（要和令牌登记的一致）
+- **Permission level**：`View` / `Workspace` / `Full`
+- **Reconnect interval**：5000
+- 服务端那几项（监听地址 / 端口 / 数据目录）桌面端留空即可
+
+保存后插件会按 agent 半边重连。`roots` / `allow` / `builds` 是数组和表，仍然写在 `%USERPROFILE%\.dsh\profiles\desktop\cordis.patch.yml` 的**用户层**覆盖里：
 
 ```yaml
-- id: desktop-bridge-agent
-  name: 'dsh-desktop-bridge/agent'
+- id: desktop-bridge
   config:
-    url: wss://dsh.mcii.cc/desktop-bridge/agent
-    token: dbk_在这里填服务器生成的设备令牌
-    device: owner-win
-    mode: workspace            # view 只看 / workspace 工作区内可改 / full 完全权限
-    approvalTimeoutMs: 90000   # 本机弹窗等多久，握手时同步给服务端
     roots:
       - D:/code
     allow:
       - git
       - bun
-      - npm
       - node
-      - pnpm
     builds:
       new-api-web:
         cmd: bun run build
         cwd: D:/code/new-api/web
         timeoutMs: 900000
 ```
-
-- `mode`：权限档位。`view` 只放只读工具；`workspace` 读写都可但不出工作区；`full` 走全盘，只挡系统目录和破坏性命令。
-- `roots`：允许我读写的目录，其它路径一律 `policy-denied`（`full` 档只挡系统目录）。
-- `allow`：允许执行的命令**名前缀**，含 `; & | $ > <` 这类 shell 拼接的命令直接拒绝。
-- `builds`：预设的构建任务，`desktop_build` 按名字调用。
 
 ## 3. 重启 Desktop
 
