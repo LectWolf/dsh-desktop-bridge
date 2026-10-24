@@ -1,0 +1,13 @@
+{
+  "id": "LectWolf/dsh-desktop-bridge",
+  "version": "0.1.0",
+  "main": "./lib/index.js",
+  "description": "把主人电脑变成远端 DSH Agent 可调用的工具宿主，反向 WebSocket + 每次调用本机确认",
+  "engines": {
+    "dsh": ">=0.2.1-rc.2"
+  },
+  "contributes": {
+    "tools": [],
+    "skills": []
+  }
+}

@@ -1,0 +1,11 @@
+# dsh-desktop-bridge bundle patch
+#
+# 装成 profile 的一层时，这一行把插件挂上去（config 走默认值，具体参数在
+# 设置卡的「桌面桥」里改，或在 profile 的 cordis.patch.yml 里覆盖）：
+#
+#   dsh plugin --profile web add github:LectWolf/dsh-desktop-bridge
+#
+# 配了 url + token 就跑 agent，否则跑 host，同一个包两边通用。
+- insert:
+    - id: desktop-bridge
+      name: 'dsh-desktop-bridge'
