@@ -77,7 +77,7 @@ host 回 `welcome`，把协商结果写回去：
 ## 审批（v1 起在主人电脑上做）
 
 - agent 在 `hello` 里声明 `approval.local: true`，host 就把 `approve` 帧发给它，由本机弹窗决定。
-- 找不到本地审批器（老 agent / 非 Windows 开发机）时 host 回落到自绘面板队列，接口形状一样。
+- 不满足 v1（没有 `protocol: 1` 或 `approval.local`）的 agent 会被 `close 4002`，工具返回 `desktop-agent-incompatible`；服务端不再保留第二套审批界面。
 - 「始终允许」只落在主人电脑（`~/.dsh/desktop-bridge-grants.json`），服务端改不动、也看不到。
 - 超时由两边各自兜：客户端弹窗到点自动拒绝，host 再按握手时长兜一层，避免工具一直挂着。
 

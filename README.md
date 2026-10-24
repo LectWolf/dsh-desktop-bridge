@@ -45,6 +45,7 @@ host 侧另有一份 `roots` / `allow` 作为额外上限，两边都放行才�
 2. 弹窗在主人电脑上：「允许一次 / 始终允许 / 拒绝」。
 3. 「始终允许」只写在本机（`~/.dsh/desktop-bridge-grants.json`），服务端改不动也看不到。
 4. 超时（默认 90s）→ 拒绝，工具返回 `approval-timeout`；服务端再按协商时长兜一层。
+5. 服务端不再有第二套审批界面：agent 达不到 v1（无本机审批）会直接被踢掉，工具报 `desktop-agent-incompatible`。
 5. 每次调用都进审计日志（`audit.jsonl`）：工具、参数摘要、决策、耗时、退出码。
 
 ## 工具
@@ -60,7 +61,7 @@ host 侧另有一份 `roots` / `allow` 作为额外上限，两边都放行才�
 
 ## 配置
 
-两边都有 `Config` schema，装好后直接进对应 Harness 的「设置 → 插件」页改，改完即生效。
+两边都声明了 `Config` schema（用于校验 profile 里的 config）。DSH 的设置页需要客户端半边才会出现，目前按下面的配置文件改。
 
 host 侧（`cordis.patch.yml`）：
 
@@ -120,8 +121,8 @@ node lib/token.js add owner-win "主人的 Windows" /root/.dsh/desktop-bridge
 
 ## 状态
 
-协议 v1 已定并实现：握手交换、三档权限、本机审批弹窗、服务端兜底超时、schema 设置页。
-客户端半边的 harness 内嵌审批（替代原生窗体）还没做，见 `docs/protocol.md` 末尾的待办。
+协议 v1 已定并实现：握手交换、三档权限、本机审批弹窗（Windows 原生窗体）、服务端兜底超时。
+下一步是客户端半边 `lib/client.js`：harness 内嵌的设置卡片与审批弹窗，替掉原生窗体。
 
 ## 许可
 

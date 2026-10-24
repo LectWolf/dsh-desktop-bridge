@@ -51,8 +51,6 @@ dsh plugin --profile desktop add github:LectWolf/dsh-desktop-bridge
 
 ## 4. 验证
 
-Desktop 的「设置 → 插件」里能看到 `desktop-bridge-agent` 这张卡（schema 生成的表单，能改 mode / roots / allow）。
-
 连上以后服务器 Agent 能调到 `desktop_info`；调用需要在你这台电脑上弹窗点「允许一次 / 始终允许 / 拒绝」，90 秒不点就自动拒绝。
 
 ## 排错
