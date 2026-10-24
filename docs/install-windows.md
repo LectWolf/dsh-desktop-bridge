@@ -51,6 +51,8 @@ dsh plugin --profile desktop add github:LectWolf/dsh-desktop-bridge
 
 ## 4. 验证
 
+「设置 → 插件」里会多一张「桌面桥（这台电脑）」，服务器地址、令牌、设备 id、权限档位和超时都在里面改（`roots` / `allow` / `builds` 仍按上面的配置项改）。
+
 连上以后服务器 Agent 能调到 `desktop_info`；调用需要在你这台电脑上弹窗点「允许一次 / 始终允许 / 拒绝」，90 秒不点就自动拒绝。
 
 ## 排错

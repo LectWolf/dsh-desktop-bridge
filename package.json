@@ -14,7 +14,6 @@
     "./client": {
       "default": "./lib/client.js"
     },
-    "./panel.html": "./lib/panel.html",
     "./package.json": "./package.json"
   },
   "files": [
@@ -37,7 +36,11 @@
   "dsh": {
     "client": {
       "platform": "web",
-      "inject": []
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-plugin-manager"
+      ]
     }
   },
   "dependencies": {
@@ -45,6 +48,7 @@
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "~4.0.5",
-    "@deepseek-ai/dsh-tools": "*"
+    "@deepseek-ai/dsh-tools": "*",
+    "@deepseek-ai/schemastery": "*"
   }
 }

@@ -61,7 +61,9 @@ host 侧另有一份 `roots` / `allow` 作为额外上限，两边都放行才�
 
 ## 配置
 
-两边都声明了 `Config` schema（用于校验 profile 里的 config）。DSH 的设置页需要客户端半边才会出现，目前按下面的配置文件改。
+两边都声明了 `Config` schema，并由同一个客户端半边（`lib/client.js`）在「设置 → 插件」里各注册一张卡：
+服务端那张管监听地址/端口/数据目录/审批超时，桌面端那张管服务器地址、令牌、设备 id、权限档位、超时与重连。
+`roots` / `allow` / `builds` 这类表结构仍在配置文件里改，卡片里给了提示。
 
 host 侧（`cordis.patch.yml`）：
 
