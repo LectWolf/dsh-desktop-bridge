@@ -8,9 +8,13 @@
     ".": {
       "default": "./lib/index.js"
     },
+    "./agent": {
+      "default": "./lib/agent.js"
+    },
     "./client": {
       "default": "./lib/client.js"
     },
+    "./panel.html": "./lib/panel.html",
     "./package.json": "./package.json"
   },
   "files": [
@@ -35,5 +39,12 @@
       "platform": "web",
       "inject": []
     }
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.5",
+    "@deepseek-ai/dsh-tools": "*"
   }
 }
