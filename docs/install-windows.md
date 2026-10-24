@@ -23,6 +23,8 @@ dsh plugin --profile desktop add github:LectWolf/dsh-desktop-bridge
     url: wss://dsh.mcii.cc/desktop-bridge/agent
     token: dbk_在这里填服务器生成的设备令牌
     device: owner-win
+    mode: workspace            # view 只看 / workspace 工作区内可改 / full 完全权限
+    approvalTimeoutMs: 90000   # 本机弹窗等多久，握手时同步给服务端
     roots:
       - D:/code
     allow:
@@ -38,7 +40,8 @@ dsh plugin --profile desktop add github:LectWolf/dsh-desktop-bridge
         timeoutMs: 900000
 ```
 
-- `roots`：允许我读写的目录，其它路径一律 `policy-denied`。
+- `mode`：权限档位。`view` 只放只读工具；`workspace` 读写都可但不出工作区；`full` 走全盘，只挡系统目录和破坏性命令。
+- `roots`：允许我读写的目录，其它路径一律 `policy-denied`（`full` 档只挡系统目录）。
 - `allow`：允许执行的命令**名前缀**，含 `; & | $ > <` 这类 shell 拼接的命令直接拒绝。
 - `builds`：预设的构建任务，`desktop_build` 按名字调用。
 
@@ -48,7 +51,9 @@ dsh plugin --profile desktop add github:LectWolf/dsh-desktop-bridge
 
 ## 4. 验证
 
-打开 `https://dsh.mcii.cc/desktop-bridge/panel`，设备列表里应出现 `owner-win` 且为在线；服务器 Agent 这时能调到 `desktop_info`，但任何命令都要你在面板上点「允许」。
+Desktop 的「设置 → 插件」里能看到 `desktop-bridge-agent` 这张卡（schema 生成的表单，能改 mode / roots / allow）。
+
+连上以后服务器 Agent 能调到 `desktop_info`；调用需要在你这台电脑上弹窗点「允许一次 / 始终允许 / 拒绝」，90 秒不点就自动拒绝。
 
 ## 排错
 
